@@ -1,0 +1,27 @@
+cd /root/sender_count_dir/
+Date=$(date | cut -d " " -f 2,3)
+
+cp /var/log/maillog /root/sender_count_dir 
+cp /var/log/maillog.0.gz /root/sender_count_dir
+cp /var/log/maillog.1.gz /root/sender_count_dir
+
+gunzip maillog.0.gz
+gunzip maillog.1.gz
+
+cat maillog.0 >> maillog
+cat maillog.1 >> maillog
+
+rm maillog.0
+rm maillog.1
+
+users=$(cat maillog | grep "$Date" | grep qmgr | sed 's/.*<//' | sed 's/>.*$//' | grep hs.ntnu.edu.tw | sort | uniq )
+	for sender in ${users}
+	do
+		count=$(cat maillog | grep "$Date" | grep qmgr | sed 's/.*<//' | sed 's/>.*$//' | grep hs.ntnu.edu.tw | grep -o -i $sender | wc -l)
+		echo $sender $count >> result
+	done
+
+cat result | sort -n -r -k 2 | mail -s "sender count" chrisshenno1@gmail.com,j186@gs.hs.ntnu.edu.tw
+
+rm result
+rm maillog
