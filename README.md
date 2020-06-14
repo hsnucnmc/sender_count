@@ -10,9 +10,9 @@
 
 2. 計算每個 user 出現在當天 qmgr 的 from<user@hs.ntnu.edu.tw> 次數
 
-        #1:pick up 不會計算副本數量，故不採用
+        #:pick up 不會計算副本數量，故不採用
 
-        #2:假設收信人有兩個，maillog 裡會出現3次 ...qmgr...from<user@hs.ntnu.edu.tw>
+        #:假設收信人有兩個，maillog 裡會出現3次 ...qmgr...from<user@hs.ntnu.edu.tw>
 
 3. 過濾結果，留下 @*.hs.ntnu.edu.tw 的紀錄
 
