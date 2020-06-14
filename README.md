@@ -17,3 +17,9 @@
 3. 過濾結果，留下 @*.hs.ntnu.edu.tw 的紀錄
 
 4. 放入 crontab 設定23:00執行 script ，寄結果給管理員
+
+## script 位置
+
+位於 /root/sender_count_dir
+
+請替換 mailmaster@gmail.com 為你的 email
