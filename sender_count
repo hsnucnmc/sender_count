@@ -18,7 +18,7 @@ users=$(cat maillog | grep "$Date" | grep qmgr | sed 's/.*<//' | sed 's/>.*$//' 
         for sender in ${users}
                 do
                                 count=0
-                                                cat maillog | grep "$Date" | grep qmgr | sed 's/>.*$//' | grep hs.ntnu.edu.tw | grep ${sender}| sed 's/.*]//'|cut -d":" -f2>test.txt
+                                                cat maillog | grep "$Date" | grep qmgr | sed 's/>.*$//' | grep @hs.ntnu.edu.tw | grep ${sender}| sed 's/.*]//'|cut -d":" -f2>test.txt
                                                                 M=$(cat test.txt|wc -l)
                                 for id in $(seq 1 $M)
                                 do
