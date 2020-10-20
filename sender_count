@@ -15,13 +15,27 @@ rm maillog.0
 rm maillog.1
 
 users=$(cat maillog | grep "$Date" | grep qmgr | sed 's/.*<//' | sed 's/>.*$//' | grep hs.ntnu.edu.tw | sort | uniq )
-	for sender in ${users}
-	do
-		count=$(cat maillog | grep "$Date" | grep qmgr | sed 's/.*<//' | sed 's/>.*$//' | grep hs.ntnu.edu.tw | grep -o -i $sender | wc -l)
-		echo $sender $count >> result
-	done
+        for sender in ${users}
+                do
+                                count=0
+                                                cat maillog | grep "$Date" | grep qmgr | sed 's/>.*$//' | grep hs.ntnu.edu.tw | grep ${sender}| sed 's/.*]//'|cut -d":" -f2>test.txt
+                                                                M=$(cat test.txt|wc -l)
+                                for id in $(seq 1 $M)
+                                do
+                                                data=$(awk -v key=${id} 'NR==key' test.txt)
+                                                if [ $(cat maillog | grep "$Date" |grep $data|grep "status=sent"|wc -l) = "1" ]
+                                                then
+                                                        count=$((${count}+1))
+                                                fi
+                                done
+                                if [ $count != "0" ]
+                                then
+                                        echo $sender $count >> result
+                                fi
+                done
 
-cat result | sort -n -r -k 2 | mail -s "sender count" chrisshenno1@gmail.com,j186@gs.hs.ntnu.edu.tw
+cat result | sort -n -r -k 2 | mail -s "sender count" j186@gs.hs.ntnu.edu.tw,hahabox0@gmail.com
 
+rm test.txt
 rm result
 rm maillog
